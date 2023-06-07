@@ -1,11 +1,15 @@
 'use client';
 
-import useUser from '@/lib/hooks/useUser';
-import React from 'react';
+import Articles from './components/Articles';
+import Filter from './components/Filters/Filter';
 
 const HomePage = () => {
-  useUser();
-  return <div>HomePage</div>;
+  return (
+    <div className="flex flex-col gap-4">
+      <Filter />
+      <Articles />
+    </div>
+  );
 };
 
 export default HomePage;

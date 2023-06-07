@@ -45,7 +45,7 @@ const RegisterPage = () => {
 
   return (
     <>
-      <main className="fixed h-screen w-screen grid place-items-center">
+      <main className="top-0 left-0 fixed h-screen w-screen grid place-items-center">
         <Card className="max-w-screen-sm w-full">
           <form onSubmit={onSubmit}>
             <h1 className="card-title">Register</h1>

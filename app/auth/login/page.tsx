@@ -16,7 +16,6 @@ interface ILoginForm {
 
 const LoginPage = () => {
   const { mutate } = useUser();
-  console.log(1);
 
   const router = useRouter();
 
@@ -46,7 +45,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <main className="fixed h-screen w-screen grid place-items-center">
+      <main className="left-0 top-0 fixed h-screen w-screen grid place-items-center">
         <Card className="max-w-screen-sm w-full">
           <form onSubmit={onSubmit}>
             <h1 className="card-title">Login</h1>
