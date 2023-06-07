@@ -1,5 +1,6 @@
-export default interface User {
-  id: string;
+import BaseModel from './BaseModel';
+
+export default interface User extends BaseModel {
   name: string;
   email: string;
 }

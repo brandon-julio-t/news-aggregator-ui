@@ -20,6 +20,7 @@ const Filter: ComponentType = () => {
   const {
     register,
     handleSubmit,
+    watch,
     reset,
     formState: { isSubmitting },
   } = useForm<IFilterForm>({
@@ -33,7 +34,14 @@ const Filter: ComponentType = () => {
 
   const onSubmit = handleSubmit(async data => {
     const clone = new URLSearchParams([...searchParams.entries()]);
-    Object.entries(data).forEach(([key, value]) => clone.set(key, value));
+    const dateKeys = ['from', 'to'];
+    Object.entries(data).forEach(([key, value]) => {
+      if (dateKeys.includes(key) && value) {
+        clone.set(key, new Date(value).toISOString());
+      } else {
+        clone.set(key, value);
+      }
+    });
     router.push(`${pathname}?${clone}`);
   });
 
@@ -50,8 +58,8 @@ const Filter: ComponentType = () => {
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <FilterKeyword {...{ register, isSubmitting }} />
-      <FilterCategory {...{ register, isSubmitting }} />
-      <FilterDateTimeRange {...{ register, isSubmitting }} />
+      <FilterCategory {...{ register, watch, isSubmitting }} />
+      <FilterDateTimeRange {...{ register, watch, isSubmitting }} />
       <button onClick={onReset} type="button" className="btn btn-outline btn-primary">
         Reset
       </button>

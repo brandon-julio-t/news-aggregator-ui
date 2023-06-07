@@ -5,6 +5,8 @@ import PaginationResponse from '@/lib/contracts/PaginationResponse';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ComponentType } from 'react';
 import useSWR from 'swr';
+import ArticlesTable from './Articles/ArticlesTable';
+import ArticlesPaginationControl from './Articles/ArticlesPaginationControl';
 
 const Articles: ComponentType = () => {
   const router = useRouter();
@@ -26,6 +28,9 @@ const Articles: ComponentType = () => {
     <>
       {!data && (
         <>
+          <section className="flex justify-end mt-4">
+            <Skeleton className="h-12 w-32" />
+          </section>
           <Skeleton className="h-96 w-full" />
           <section className="flex justify-end mt-4">
             <Skeleton className="h-12 w-32" />
@@ -35,71 +40,9 @@ const Articles: ComponentType = () => {
 
       {data && (
         <>
-          <section className="overflow-x-auto">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Category</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.data.length <= 0 && (
-                  <tr>
-                    <td colSpan={999} className="text-center">
-                      No data
-                    </td>
-                  </tr>
-                )}
-                {data.data.length > 0 &&
-                  data.data.map((article, index) => (
-                    <tr key={article.id}>
-                      <th>{index + 1}</th>
-                      <td>{article.title}</td>
-                      <td>{article.author}</td>
-                      <td>
-                        <span className="badge badge-primary badge-outline">{article.category}</span>
-                      </td>
-                      <td>
-                        <div className="flex flex-wrap gap-2">
-                          <button className="btn btn-primary btn-xs">View</button>
-                          <button className="btn btn-primary btn-xs">Visit Source</button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>#</th>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Category</th>
-                </tr>
-              </tfoot>
-            </table>
-          </section>
-
-          <section className="justify-end flex my-4">
-            <div className="join">
-              <button className="join-item btn" onClick={() => onPaginationNav(-1)} disabled={data.current_page <= 1}>
-                «
-              </button>
-              <button className="join-item btn">
-                {data.current_page} / {data.last_page}
-              </button>
-              <button
-                className="join-item btn"
-                onClick={() => onPaginationNav(+1)}
-                disabled={data.current_page >= data.total}
-              >
-                »
-              </button>
-            </div>
-          </section>
+          <ArticlesPaginationControl pagination={data} />
+          <ArticlesTable articles={data.data} />
+          <ArticlesPaginationControl pagination={data} />
         </>
       )}
     </>

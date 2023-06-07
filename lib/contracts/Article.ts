@@ -1,5 +1,6 @@
-export default interface Article {
-  id: number;
+import BaseModel from "./BaseModel";
+
+export default interface Article extends BaseModel {
   title: string;
   description: string;
   author: string;
