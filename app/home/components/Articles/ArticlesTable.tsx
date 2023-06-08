@@ -31,7 +31,7 @@ const ArticlesTable: ComponentType<ComponentProps<'section'> & IArticlesTable> =
             articles.map((article, index) => (
               <tr key={article.id}>
                 <th>{index + 1}</th>
-                <td>{article.title}</td>
+                <td className='max-w-sm'>{article.title}</td>
                 <td>{article.author}</td>
                 <td>
                   <span className="badge badge-primary badge-outline">{article.category}</span>
