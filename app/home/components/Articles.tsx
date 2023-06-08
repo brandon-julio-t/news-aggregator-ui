@@ -50,7 +50,7 @@ const Articles: ComponentType<ComponentProps<'div'> & IArticle> = ({ baseApiPath
       {data && (
         <>
           <ArticlesPaginationControl pagination={data} />
-          <ArticlesTable articles={data.data} />
+          <ArticlesTable pagination={data} />
           <ArticlesPaginationControl pagination={data} />
         </>
       )}

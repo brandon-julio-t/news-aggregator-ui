@@ -15,28 +15,43 @@ const ArticlesPaginationControl: ComponentType<ComponentProps<'section'> & IArti
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const onPaginationNav = (pageDelta: -1 | 1) => {
-    const nextPage = pagination.current_page + pageDelta;
+  const onNav = (page: number) => {
     const clone = new URLSearchParams([...searchParams]);
-    clone.set('page', nextPage.toString());
+    clone.set('page', page.toString());
     router.push(`${pathname}?${clone}`);
   };
 
   return (
     <section className="justify-end flex my-4" {...rest}>
       <div className="join">
-        <button className="join-item btn" onClick={() => onPaginationNav(-1)} disabled={pagination.current_page <= 1}>
-          «
-        </button>
-        <button className="join-item btn">
-          {pagination.current_page} / {pagination.last_page}
+        <button className="join-item btn" onClick={() => onNav(1)} disabled={pagination.current_page <= 1}>
+          ⏪
         </button>
         <button
           className="join-item btn"
-          onClick={() => onPaginationNav(+1)}
+          onClick={() => onNav(pagination.current_page - 1)}
+          disabled={pagination.current_page <= 1}
+        >
+          ◀
+        </button>
+
+        <button className="join-item btn">
+          {pagination.current_page} / {pagination.last_page}
+        </button>
+
+        <button
+          className="join-item btn"
+          onClick={() => onNav(pagination.current_page + 1)}
           disabled={pagination.current_page >= pagination.last_page}
         >
-          »
+          ▶
+        </button>
+        <button
+          className="join-item btn"
+          onClick={() => onNav(pagination.last_page)}
+          disabled={pagination.current_page >= pagination.last_page}
+        >
+          ⏩
         </button>
       </div>
     </section>

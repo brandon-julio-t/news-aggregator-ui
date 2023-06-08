@@ -1,7 +1,7 @@
 import Skeleton from '@/components/common/Skeleton';
 import axios from '@/lib/common/axios';
 import Article from '@/lib/contracts/Article';
-import React, { ComponentProps, ComponentType, useEffect, useState } from 'react';
+import { ComponentProps, ComponentType } from 'react';
 import useSWR from 'swr';
 
 interface IArticleBody {
