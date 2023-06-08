@@ -3,16 +3,20 @@ import axios from '@/lib/common/axios';
 import Article from '@/lib/contracts/Article';
 import PaginationResponse from '@/lib/contracts/PaginationResponse';
 import { useSearchParams } from 'next/navigation';
-import { ComponentType, useEffect } from 'react';
+import { ComponentProps, ComponentType, useEffect } from 'react';
 import useSWR, { preload } from 'swr';
 import ArticlesPaginationControl from './Articles/ArticlesPaginationControl';
 import ArticlesTable from './Articles/ArticlesTable';
 import { toast } from 'react-hot-toast';
 
-const Articles: ComponentType = () => {
+interface IArticle {
+  baseApiPath: string;
+}
+
+const Articles: ComponentType<ComponentProps<'div'> & IArticle> = ({ baseApiPath, ...rest }) => {
   const searchParams = useSearchParams();
 
-  const key = `/api/articles?${searchParams}`;
+  const key = `${baseApiPath}?${searchParams}`;
   const fetcher = (path: string) => axios.get<PaginationResponse<Article>>(path).then(r => r.data);
 
   const { data, error } = useSWR(key, fetcher);
@@ -22,15 +26,15 @@ const Articles: ComponentType = () => {
     const nextPage = (isNaN(currentPage) ? 1 : currentPage) + 1;
     const clone = new URLSearchParams([...searchParams.entries()]);
     clone.set('page', nextPage.toString());
-    preload(`/api/articles?${clone}`, fetcher);
-  }, [searchParams]);
+    preload(`${baseApiPath}?${clone}`, fetcher);
+  }, [baseApiPath, searchParams]);
 
   if (error) {
     toast.error(error, { id: key });
   }
 
   return (
-    <>
+    <div className="flex flex-col gap-4" {...rest}>
       {!data && (
         <>
           <section className="flex justify-end mt-4">
@@ -50,7 +54,7 @@ const Articles: ComponentType = () => {
           <ArticlesPaginationControl pagination={data} />
         </>
       )}
-    </>
+    </div>
   );
 };
 

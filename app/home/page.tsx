@@ -10,7 +10,7 @@ const HomePage = () => {
 
       <h1 className="my-2 text-2xl font-bold">Explore Articles</h1>
 
-      <Articles />
+      <Articles baseApiPath="/api/articles" />
     </div>
   );
 };
