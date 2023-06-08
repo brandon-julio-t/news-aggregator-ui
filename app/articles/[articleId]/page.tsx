@@ -3,10 +3,9 @@
 import LikeOrDislikeUserArticlePreferenceButton from '@/components/user-article-preference.tsx/LikeOrDislikeUserArticlePreferenceButton';
 import axios from '@/lib/common/axios';
 import Article from '@/lib/contracts/Article';
-import useUser from '@/lib/hooks/useUser';
-import useUserArticlePreferences from '@/lib/hooks/useUserArticlePreferences';
 import { ComponentType } from 'react';
 import useSWR from 'swr';
+import ArticleBody from './components/ArticleBody';
 
 interface IArticleDetailPage {
   params: {
@@ -28,7 +27,7 @@ const ArticleDetailPage: ComponentType<IArticleDetailPage> = ({ params }) => {
   }
 
   return (
-    <>
+    <div className="max-w-screen-lg w-full mx-auto">
       <header>
         <h1 className="text-3xl font-bold mb-2">{article.title}</h1>
         <div>
@@ -44,22 +43,22 @@ const ArticleDetailPage: ComponentType<IArticleDetailPage> = ({ params }) => {
         <p>
           <small>Posted on {new Date(article.created_at).toString()}</small>
         </p>
-
-        <article className="my-2">
-          <section>{article.description}</section>
-        </article>
-
-        <p>
-          <small>
-            Source:{' '}
-            <a href={article.source} target="_blank" rel="noopener noreferrer" className="link">
-              {article.source}
-            </a>{' '}
-            <LikeOrDislikeUserArticlePreferenceButton type="source" value={article.source} />
-          </small>
-        </p>
       </header>
-    </>
+
+      <article className="my-2">
+        <ArticleBody article={article} />
+      </article>
+
+      <p>
+        <small>
+          Source:{' '}
+          <a href={article.source} target="_blank" rel="noopener noreferrer" className="link">
+            {article.source}
+          </a>{' '}
+          <LikeOrDislikeUserArticlePreferenceButton type="source" value={article.source} />
+        </small>
+      </p>
+    </div>
   );
 };
 
