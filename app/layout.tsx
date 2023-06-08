@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" data-theme="light">
       <body className={inter.className}>
         <Navbar />
-        <main className="container mx-auto px-2 md:px-0">{children}</main>
+        <main className="container mx-auto px-2">{children}</main>
         <Toaster />
       </body>
     </html>
