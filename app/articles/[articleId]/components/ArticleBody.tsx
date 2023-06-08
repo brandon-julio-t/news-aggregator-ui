@@ -14,20 +14,18 @@ const ArticleBody: ComponentType<ComponentProps<'section'> & IArticleBody> = ({ 
       .get<string>(path)
       .then(r => r.data)
       .then(htmlBody => {
-        let paragraphs = [] as string[];
-
         const parser = new DOMParser().parseFromString(htmlBody, 'text/html');
         const source = article.source;
 
         if (source.includes('techcrunch')) {
-          paragraphs = parseTechCrunchParagraphs(parser);
+          return parseTechCrunchParagraphs(parser);
         } else if (source.includes('theguardian')) {
-          paragraphs = parseTheGuardianParagraphs(parser);
+          return parseTheGuardianParagraphs(parser);
         } else if (source.includes('nytimes')) {
-          paragraphs = parseNYTimesParagraphs(parser);
+          return parseNYTimesParagraphs(parser);
         }
 
-        return paragraphs;
+        return [];
       })
   );
 
