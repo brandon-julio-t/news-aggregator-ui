@@ -35,7 +35,7 @@ const LikeOrDislikeUserArticlePreferenceButton: ComponentType<IAddOrRemoveUserAr
   const { data, isLoading, mutate } = useUserArticlePreferences();
 
   const attr = typeToAttrMapping.get(type);
-  const isLiked = !!attr && !!data && data[attr].some(v => v.includes(value) || value.includes(v));
+  const isLiked = !!attr && !!data && data[attr].some(v => v === value || v.includes(value) || value.includes(v));
 
   const onClick = async () => {
     try {
@@ -54,7 +54,9 @@ const LikeOrDislikeUserArticlePreferenceButton: ComponentType<IAddOrRemoveUserAr
         {
           optimisticData: () => {
             const clone = { ...data };
-            clone[attr] = isLiked ? clone[attr].filter(v => v !== value) : [...clone[attr], value];
+            clone[attr] = isLiked
+              ? clone[attr].filter(v => v !== value && !v.includes(value) && !value.includes(v))
+              : [...clone[attr], value];
             return clone;
           },
           populateCache: true,
