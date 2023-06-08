@@ -34,7 +34,7 @@ const ArticlesPaginationControl: ComponentType<ComponentProps<'section'> & IArti
         <button
           className="join-item btn"
           onClick={() => onPaginationNav(+1)}
-          disabled={pagination.current_page >= pagination.total}
+          disabled={pagination.current_page >= pagination.last_page}
         >
           »
         </button>
