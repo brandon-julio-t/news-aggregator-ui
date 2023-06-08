@@ -15,6 +15,10 @@ const ForYouPage = () => {
 
   return (
     <>
+      <h1 className="my-2 text-2xl font-bold">For You</h1>
+
+      <p>Enhance For You page by exploring articles and like the author/category/source.</p>
+
       {!data && (
         <>
           <section className="flex justify-end mt-4">
