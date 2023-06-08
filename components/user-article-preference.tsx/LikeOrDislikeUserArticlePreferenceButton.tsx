@@ -35,7 +35,7 @@ const LikeOrDislikeUserArticlePreferenceButton: ComponentType<IAddOrRemoveUserAr
   const { data, isLoading, mutate } = useUserArticlePreferences();
 
   const attr = typeToAttrMapping.get(type);
-  const isLiked = !!attr && !!data && data[attr].includes(value);
+  const isLiked = !!attr && !!data && data[attr].some(v => v.includes(value) || value.includes(v));
 
   const onClick = async () => {
     try {
