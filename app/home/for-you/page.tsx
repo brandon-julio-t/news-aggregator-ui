@@ -1,17 +1,15 @@
+'use client';
+
 import Skeleton from '@/components/common/Skeleton';
 import axios from '@/lib/common/axios';
 import Article from '@/lib/contracts/Article';
 import PaginationResponse from '@/lib/contracts/PaginationResponse';
-import { useSearchParams } from 'next/navigation';
-import { ComponentType } from 'react';
 import useSWR from 'swr';
-import ArticlesPaginationControl from './Articles/ArticlesPaginationControl';
-import ArticlesTable from './Articles/ArticlesTable';
+import ArticlesPaginationControl from '../components/Articles/ArticlesPaginationControl';
+import ArticlesTable from '../components/Articles/ArticlesTable';
 
-const Articles: ComponentType = () => {
-  const searchParams = useSearchParams();
-
-  const { data } = useSWR(`/api/articles?${searchParams}`, path =>
+const ForYouPage = () => {
+  const { data } = useSWR('/api/articles/for-you', path =>
     axios.get<PaginationResponse<Article>>(path).then(r => r.data)
   );
 
@@ -40,4 +38,4 @@ const Articles: ComponentType = () => {
   );
 };
 
-export default Articles;
+export default ForYouPage;

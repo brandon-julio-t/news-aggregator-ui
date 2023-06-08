@@ -29,7 +29,7 @@ const Navbar: ComponentType<ComponentProps<'nav'>> = ({ ...rest }) => {
           <Link href="/home" className="btn btn-ghost">
             Home
           </Link>
-          <Link href="/for-you" className="btn btn-ghost">
+          <Link href="/home/for-you" className="btn btn-ghost">
             For You
           </Link>
           <div className="mx-auto"></div>

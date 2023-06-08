@@ -33,28 +33,31 @@ const PersonalizeForYouPage = () => {
       )}
 
       {data && (
-        <>
+        <div className="flex flex-col gap-4 divide-y">
           {Object.entries(data)
             .filter(([k, _]) => k.startsWith('liked_'))
             .map(([key, value]: [string, string[]]) => (
-              <section key={key}>
+              <section key={key} className="py-4">
                 <h2 className="capitalize mb-2 text-xl font-medium">{key.replace('_', ' ')}</h2>
 
                 <div className="flex flex-col sm:flex-row flex-wrap gap-2">
-                  {value.map(v => (
-                    <Card key={`${key}|${v}`}>
-                      <div>{v}</div>
+                  {value.length <= 0 && <p>No data.</p>}
 
-                      <LikeOrDislikeUserArticlePreferenceButton
-                        type={attrToTypeMapping.get(key as IAttr) ?? 'author'}
-                        value={v}
-                      />
-                    </Card>
-                  ))}
+                  {value.length > 0 &&
+                    value.map(v => (
+                      <Card key={`${key}|${v}`}>
+                        <div>{v}</div>
+
+                        <LikeOrDislikeUserArticlePreferenceButton
+                          type={attrToTypeMapping.get(key as IAttr) ?? 'author'}
+                          value={v}
+                        />
+                      </Card>
+                    ))}
                 </div>
               </section>
             ))}
-        </>
+        </div>
       )}
     </div>
   );
