@@ -2,6 +2,33 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+1. Clone this repository
+
+```bash
+git clone https://github.com/brandon-julio-t/news-aggregator-ui
+```
+
+2. Install dependencies.
+
+```bash
+cd news-aggregator-ui
+npm i
+```
+
+3. Update environment variables (`.env.local`) to match backend.
+
+```bash
+NEXT_PUBLIC_BACKEND_URL=http://localhost # or http://localhost:8000 if not using Laravel Sail
+```
+
+4. Build and run container.
+
+```bash
+docker compose up --build # or `docker compose up` if image is built
+```
+
+## Getting Started (Next.js)
+
 First, run the development server:
 
 ```bash
