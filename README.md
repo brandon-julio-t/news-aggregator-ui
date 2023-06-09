@@ -21,6 +21,8 @@ NEXT_PUBLIC_BACKEND_URL=http://localhost # or http://localhost:8000 if not using
 docker compose up --build # or `docker compose up` if image is built
 ```
 
+4. Visit [http://localhost:3000/auth/register](http://localhost:3000/auth/register)
+
 ## Getting Started (Next.js)
 
 First, run the development server:
