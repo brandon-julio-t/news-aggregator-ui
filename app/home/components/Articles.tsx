@@ -21,7 +21,7 @@ const Articles: ComponentType<ComponentProps<'div'> & IArticle> = ({ baseApiPath
   console.log({ key });
   const fetcher = (path: string) => axios.get<PaginationResponse<Article>>(path).then(r => r.data);
 
-  const { data, isLoading, isValidating, error } = useSWR(key, fetcher);
+  const { data, isLoading, error } = useSWR(key, fetcher);
 
   useEffect(() => {
     const currentPage = Number(searchParams.get('page'));
