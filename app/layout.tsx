@@ -1,4 +1,4 @@
-import Navbar from '@/components/layout/Navbar';
+import DrawerNavbar from '@/components/layout/DrawerNavbar';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 import './globals.css';
@@ -14,8 +14,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="light">
       <body className={inter.className}>
-        <Navbar />
-        <main className="container mx-auto px-2">{children}</main>
+        <DrawerNavbar>
+          <main className="container mx-auto px-2">{children}</main>
+        </DrawerNavbar>
+
         <Toaster />
       </body>
     </html>
