@@ -1,13 +1,14 @@
 import Skeleton from '@/components/common/Skeleton';
+import PaginationControl from '@/components/common/pagination/PaginationControl';
+import PaginationTable from '@/components/common/pagination/PaginationTable';
 import axios from '@/lib/common/axios';
 import Article from '@/lib/contracts/Article';
 import PaginationResponse from '@/lib/contracts/PaginationResponse';
 import { useSearchParams } from 'next/navigation';
 import { ComponentProps, ComponentType, useEffect } from 'react';
-import useSWR, { preload } from 'swr';
-import ArticlesPaginationControl from './Articles/ArticlesPaginationControl';
-import ArticlesTable from './Articles/ArticlesTable';
 import { toast } from 'react-hot-toast';
+import useSWR, { preload } from 'swr';
+import ArticleTableRow from './Articles/ArticleTableRow';
 
 interface IArticle {
   baseApiPath: string;
@@ -49,9 +50,15 @@ const Articles: ComponentType<ComponentProps<'div'> & IArticle> = ({ baseApiPath
 
       {data && (
         <>
-          <ArticlesPaginationControl pagination={data} />
-          <ArticlesTable pagination={data} />
-          <ArticlesPaginationControl pagination={data} />
+          <PaginationControl pagination={data} />
+          <PaginationTable
+            pagination={data}
+            headers={['#', 'Title', 'Author', 'Category', '']}
+            render={(article, index) => (
+              <ArticleTableRow key={article.id} article={article} index={index} pagination={data} />
+            )}
+          />
+          <PaginationControl pagination={data} />
         </>
       )}
     </div>
