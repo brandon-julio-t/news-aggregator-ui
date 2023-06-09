@@ -7,5 +7,7 @@ services:
     volumes:
       - .:/app
     environment:
-      - NODE_ENV=development
-      - WATCHPACK_POLLING=true
+      - NODE_ENV=production
+    # environment:
+    #   - NODE_ENV=development
+    #   - WATCHPACK_POLLING=true
