@@ -31,7 +31,14 @@ const ArticleBody: ComponentType<ComponentProps<'section'> & IArticleBody> = ({ 
 
   return (
     <section {...rest} className="flex flex-col gap-4">
-      {isLoading && <Skeleton className="w-full h-96" />}
+      {isLoading &&
+        Array.from({ length: 4 }).map((_, i1) => (
+          <div key={i1} className="flex flex-col gap-1">
+            {Array.from({ length: 4 }).map((_, i2) => (
+              <Skeleton key={i2} className="w-full h-4" />
+            ))}
+          </div>
+        ))}
 
       {!isLoading && data && (
         <>
