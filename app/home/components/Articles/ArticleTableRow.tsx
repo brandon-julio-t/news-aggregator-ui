@@ -23,6 +23,7 @@ const ArticleTableRow: ComponentType<ComponentProps<'tr'> & IArticleTableRow> = 
       <td>
         <span className="badge badge-primary badge-outline whitespace-nowrap">{article.category}</span>
       </td>
+      <td>{new Date(article.created_at).toString()}</td>
       <td>
         <div className="flex flex-wrap gap-2">
           <Link href={`/articles/${article.id}`} className="btn btn-primary btn-xs">

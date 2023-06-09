@@ -54,7 +54,7 @@ const Articles: ComponentType<ComponentProps<'div'> & IArticle> = ({ baseApiPath
           <PaginationControl pagination={data} />
           <PaginationTable
             pagination={data}
-            headers={['#', 'Title', 'Author', 'Category', '']}
+            headers={['#', 'Title', 'Author', 'Category', 'Published At', '']}
             render={(article, index) => (
               <ArticleTableRow key={article.id} article={article} index={index} pagination={data} />
             )}
