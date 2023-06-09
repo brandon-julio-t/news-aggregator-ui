@@ -18,9 +18,10 @@ const Articles: ComponentType<ComponentProps<'div'> & IArticle> = ({ baseApiPath
   const searchParams = useSearchParams();
 
   const key = `${baseApiPath}?${searchParams}`;
+  console.log({ key });
   const fetcher = (path: string) => axios.get<PaginationResponse<Article>>(path).then(r => r.data);
 
-  const { data, error } = useSWR(key, fetcher);
+  const { data, isLoading, isValidating, error } = useSWR(key, fetcher);
 
   useEffect(() => {
     const currentPage = Number(searchParams.get('page'));
@@ -36,7 +37,7 @@ const Articles: ComponentType<ComponentProps<'div'> & IArticle> = ({ baseApiPath
 
   return (
     <div className="flex flex-col gap-4" {...rest}>
-      {!data && (
+      {(isLoading || !data) && (
         <>
           <section className="flex justify-end mt-4">
             <Skeleton className="h-12 w-32" />
@@ -48,7 +49,7 @@ const Articles: ComponentType<ComponentProps<'div'> & IArticle> = ({ baseApiPath
         </>
       )}
 
-      {data && (
+      {!isLoading && data && (
         <>
           <PaginationControl pagination={data} />
           <PaginationTable

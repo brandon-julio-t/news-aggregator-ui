@@ -18,10 +18,10 @@ const ArticleTableRow: ComponentType<ComponentProps<'tr'> & IArticleTableRow> = 
   return (
     <tr key={article.id} {...rest}>
       <th>{(pagination.current_page - 1) * pagination.per_page + (index + 1)}</th>
-      <td className="max-w-sm">{article.title}</td>
+      <td>{article.title}</td>
       <td>{article.author}</td>
       <td>
-        <span className="badge badge-primary badge-outline">{article.category}</span>
+        <span className="badge badge-primary badge-outline whitespace-nowrap">{article.category}</span>
       </td>
       <td>
         <div className="flex flex-wrap gap-2">

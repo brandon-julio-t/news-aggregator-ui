@@ -11,10 +11,11 @@ const PaginationTable = <T extends object>({
   pagination,
   headers,
   render,
+  className,
   ...rest
 }: ComponentProps<'section'> & IPaginationTable<T>) => {
   return (
-    <section className="overflow-x-auto" {...rest}>
+    <section className={`overflow-x-auto ${className}`} {...rest}>
       <table className="table">
         <thead>
           <tr>

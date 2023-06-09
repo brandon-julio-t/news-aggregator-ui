@@ -2,7 +2,7 @@
 
 import Card from '@/components/common/Card';
 import Skeleton from '@/components/common/Skeleton';
-import LikeOrDislikeUserArticlePreferenceButton from '@/components/user-article-preference.tsx/LikeOrDislikeUserArticlePreferenceButton';
+import LikeOrDislikeUserArticlePreferenceButton from '@/components/user-article-preference/LikeOrDislikeUserArticlePreferenceButton';
 import useUserArticlePreferences from '@/lib/hooks/useUserArticlePreferences';
 import React from 'react';
 

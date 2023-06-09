@@ -1,6 +1,6 @@
 'use client';
 
-import LikeOrDislikeUserArticlePreferenceButton from '@/components/user-article-preference.tsx/LikeOrDislikeUserArticlePreferenceButton';
+import LikeOrDislikeUserArticlePreferenceButton from '@/components/user-article-preference/LikeOrDislikeUserArticlePreferenceButton';
 import axios from '@/lib/common/axios';
 import Article from '@/lib/contracts/Article';
 import { ComponentType } from 'react';
