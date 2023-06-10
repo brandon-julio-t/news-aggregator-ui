@@ -23,13 +23,13 @@ const ArticleTableRow: ComponentType<ComponentProps<'tr'> & IArticleTableRow> = 
       <td>
         <div className="flex flex-nowrap gap-2 items-center">
           {article.author}
-          <LikeOrDislikeUserArticlePreferenceButton noLabel type="author" value={article.author} />
+          <LikeOrDislikeUserArticlePreferenceButton type="author" value={article.author} />
         </div>
       </td>
       <td>
         <div className="flex flex-nowrap gap-2 items-center">
           <span className="badge badge-primary badge-outline whitespace-nowrap">{article.category}</span>
-          <LikeOrDislikeUserArticlePreferenceButton noLabel type="category" value={article.category} />
+          <LikeOrDislikeUserArticlePreferenceButton type="category" value={article.category} />
         </div>
       </td>
       <td>{new Date(article.created_at).toString()}</td>
