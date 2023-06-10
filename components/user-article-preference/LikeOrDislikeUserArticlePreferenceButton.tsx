@@ -37,23 +37,24 @@ const LikeOrDislikeUserArticlePreferenceButton: ComponentType<IAddOrRemoveUserAr
   const { data: user } = useUser();
   const { data, isLoading, mutate } = useUserArticlePreferences();
 
-  const attr = typeToAttrMapping.get(type);
-  const isLiked = !!attr && !!data && data[attr].some(v => v === value || v.includes(value) || value.includes(v));
+  const attribute = typeToAttrMapping.get(type);
+  const isLiked = attribute && data && data[attribute].some(v => v === value || v.includes(value) || value.includes(v));
 
   const onClick = async () => {
-    if (!user || !data || !attr) return;
+    if (!user || !data || !attribute) return;
+
+    const action = isLiked ? 'dislike' : 'like';
 
     mutate(
       axios
         .put<UserArticlePreference, AxiosResponse<UserArticlePreference>, IPayload>(
           `/api/users/${user.id}/user-article-preferences/${data.id}`,
-          {
-            action: isLiked ? 'dislike' : 'like',
-            attribute: attr,
-            value,
-          }
+          { action, attribute, value }
         )
-        .then(r => r.data)
+        .then(r => {
+          toast.success(`${value} ${type} ${action}d!`);
+          return r.data;
+        })
         .catch((error: AxiosError<ErrorResponse>) => {
           console.error(error);
           toast.error(error.response?.data.message ?? 'Like/dislike error.');
@@ -64,9 +65,9 @@ const LikeOrDislikeUserArticlePreferenceButton: ComponentType<IAddOrRemoveUserAr
           gMutate('/api/articles/for-you?');
 
           const clone = { ...data };
-          clone[attr] = isLiked
-            ? clone[attr].filter(v => v !== value && !v.includes(value) && !value.includes(v))
-            : [...clone[attr], value];
+          clone[attribute] = isLiked
+            ? clone[attribute].filter(v => v !== value && !v.includes(value) && !value.includes(v))
+            : [...clone[attribute], value];
 
           return clone;
         },
