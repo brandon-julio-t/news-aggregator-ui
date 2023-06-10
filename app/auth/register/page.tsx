@@ -17,7 +17,7 @@ interface IRegisterForm {
 }
 
 const RegisterPage = () => {
-  useUser();
+  const { mutate } = useUser();
 
   const router = useRouter();
 
@@ -34,7 +34,7 @@ const RegisterPage = () => {
         {
           loading: 'Registering...',
           success: () => {
-            router.push('/auth/login');
+            mutate().then(() => router.push('/auth/login'));
             return 'Register success!';
           },
           error: (error: AxiosError<ErrorResponse>) => error.response?.data.message ?? 'Register failed.',
