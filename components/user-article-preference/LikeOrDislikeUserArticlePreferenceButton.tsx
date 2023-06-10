@@ -3,7 +3,7 @@ import ErrorResponse from '@/lib/contracts/ErrorResponse';
 import UserArticlePreference from '@/lib/contracts/UserArticlePreference';
 import useUser from '@/lib/hooks/useUser';
 import useUserArticlePreferences from '@/lib/hooks/useUserArticlePreferences';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { ComponentType } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -43,15 +43,16 @@ const LikeOrDislikeUserArticlePreferenceButton: ComponentType<IAddOrRemoveUserAr
     try {
       if (!user || !data || !attr) return;
 
-      const payload: IPayload = {
-        action: isLiked ? 'dislike' : 'like',
-        attribute: attr,
-        value,
-      };
-
       mutate(
         axios
-          .put<UserArticlePreference>(`/api/users/${user.id}/user-article-preferences/${data.id}`, payload)
+          .put<UserArticlePreference, AxiosResponse<UserArticlePreference>, IPayload>(
+            `/api/users/${user.id}/user-article-preferences/${data.id}`,
+            {
+              action: isLiked ? 'dislike' : 'like',
+              attribute: attr,
+              value,
+            }
+          )
           .then(r => r.data),
         {
           optimisticData: () => {
@@ -59,6 +60,7 @@ const LikeOrDislikeUserArticlePreferenceButton: ComponentType<IAddOrRemoveUserAr
             clone[attr] = isLiked
               ? clone[attr].filter(v => v !== value && !v.includes(value) && !value.includes(v))
               : [...clone[attr], value];
+
             return clone;
           },
           populateCache: true,
@@ -67,6 +69,7 @@ const LikeOrDislikeUserArticlePreferenceButton: ComponentType<IAddOrRemoveUserAr
         }
       );
     } catch (e) {
+      console.error(e);
       const error = e as AxiosError<ErrorResponse>;
       toast.error(error.response?.data.message ?? 'Like/dislike error.');
     }

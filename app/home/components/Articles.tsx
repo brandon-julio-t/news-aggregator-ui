@@ -18,7 +18,6 @@ const Articles: ComponentType<ComponentProps<'div'> & IArticle> = ({ baseApiPath
   const searchParams = useSearchParams();
 
   const key = `${baseApiPath}?${searchParams}`;
-  console.log({ key });
   const fetcher = (path: string) => axios.get<PaginationResponse<Article>>(path).then(r => r.data);
 
   const { data, isLoading, error } = useSWR(key, fetcher);
