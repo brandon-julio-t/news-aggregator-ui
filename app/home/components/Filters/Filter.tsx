@@ -42,6 +42,7 @@ const Filter: ComponentType = () => {
         clone.set(key, value);
       }
     });
+    clone.set('page', '1');
     router.push(`${pathname}?${clone}`);
   });
 
