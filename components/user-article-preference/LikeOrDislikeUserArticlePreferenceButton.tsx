@@ -1,3 +1,4 @@
+import { mutate as gMutate } from 'swr';
 import axios from '@/lib/common/axios';
 import ErrorResponse from '@/lib/contracts/ErrorResponse';
 import UserArticlePreference from '@/lib/contracts/UserArticlePreference';
@@ -60,6 +61,8 @@ const LikeOrDislikeUserArticlePreferenceButton: ComponentType<IAddOrRemoveUserAr
         }),
       {
         optimisticData: () => {
+          gMutate('/api/articles/for-you?');
+
           const clone = { ...data };
           clone[attr] = isLiked
             ? clone[attr].filter(v => v !== value && !v.includes(value) && !value.includes(v))
