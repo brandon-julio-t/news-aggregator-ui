@@ -40,39 +40,38 @@ const LikeOrDislikeUserArticlePreferenceButton: ComponentType<IAddOrRemoveUserAr
   const isLiked = !!attr && !!data && data[attr].some(v => v === value || v.includes(value) || value.includes(v));
 
   const onClick = async () => {
-    try {
-      if (!user || !data || !attr) return;
+    if (!user || !data || !attr) return;
 
-      mutate(
-        axios
-          .put<UserArticlePreference, AxiosResponse<UserArticlePreference>, IPayload>(
-            `/api/users/${user.id}/user-article-preferences/${data.id}`,
-            {
-              action: isLiked ? 'dislike' : 'like',
-              attribute: attr,
-              value,
-            }
-          )
-          .then(r => r.data),
-        {
-          optimisticData: () => {
-            const clone = { ...data };
-            clone[attr] = isLiked
-              ? clone[attr].filter(v => v !== value && !v.includes(value) && !value.includes(v))
-              : [...clone[attr], value];
+    mutate(
+      axios
+        .put<UserArticlePreference, AxiosResponse<UserArticlePreference>, IPayload>(
+          `/api/users/${user.id}/user-article-preferences/${data.id}`,
+          {
+            action: isLiked ? 'dislike' : 'like',
+            attribute: attr,
+            value,
+          }
+        )
+        .then(r => r.data)
+        .catch((error: AxiosError<ErrorResponse>) => {
+          console.error(error);
+          toast.error(error.response?.data.message ?? 'Like/dislike error.');
+          return undefined;
+        }),
+      {
+        optimisticData: () => {
+          const clone = { ...data };
+          clone[attr] = isLiked
+            ? clone[attr].filter(v => v !== value && !v.includes(value) && !value.includes(v))
+            : [...clone[attr], value];
 
-            return clone;
-          },
-          populateCache: true,
-          revalidate: false,
-          rollbackOnError: true,
-        }
-      );
-    } catch (e) {
-      console.error(e);
-      const error = e as AxiosError<ErrorResponse>;
-      toast.error(error.response?.data.message ?? 'Like/dislike error.');
-    }
+          return clone;
+        },
+        populateCache: true,
+        revalidate: false,
+        rollbackOnError: true,
+      }
+    );
   };
 
   return (
